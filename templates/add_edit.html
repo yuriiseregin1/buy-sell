@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Объявление {{ adds[add_id].title }} удалено</title>
+</head>
+<body>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <h5 class="my-0 mr-md-auto font-weight-normal"><a class="p-2 text-dark" href="/">К У П И - П Р О Д А Й</a></h5>
+
+  <nav class="my-2 my-md-0 mr-md-3">
+      <a class="p-2 text-dark" href="/">Главная</a>
+      <a class="p-2 text-dark" href="/my_adds">Мои объявления</a>
+      <a class="p-2 text-dark" href="/add">Разместить объявление</a>
+      <a class="p-2 text-dark" href="/profile/{{ id }}">Личный кабинет</a>
+      <a class="p-2 text-dark" href="/about">О нас</a>
+  </nav>
+
+        {% if id != '1' %}
+        <a class="btn btn-outline-primary" href="/profile/{{ id }}">{{ art1.name }}</a>
+        {% else %}
+  <a class="btn btn-outline-primary mr-md-3" href="/sign_in">Войти</a>
+  <a class="btn btn-outline-primary" href="/sign_up">Зарегистрироваться</a>
+        {% endif %}
+</div>
+
+    {% if adds[add_id].type == 'Куплю' %}
+        <div class="container">
+      <div class="py-5 text-center">
+          <h2><b>К У П И - П Р О Д А Й</b></h2>
+        <p class="lead">Заполните форму объявления</p>
+      </div>
+      <div class="row">
+        <div class="col-md-12 order-md-1">
+          <h4 class="mb-3">Описание объявления</h4>
+          <form class="needs-validation" novalidate="" method="POST">
+            <div class="row">
+            </div>
+            <div class="mb-3">
+              <label for="name">Название объявления</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="name" name="title" placeholder="" required="" value="{{ adds[add_id].title }}">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="message">Описание объявления</label>
+                <textarea name="message" id="message" cols="152" rows="5" placeholder="" >{{ adds[add_id].message }}</textarea>
+            </div>
+            <div class="mb-3">
+              <label for="address">Адрес</label>
+              <input name="address" type="text" class="form-control" id="address" placeholder="" value="{{ adds[add_id].address }}" required="">
+            </div>
+            <div class="row">
+              <div class="col-md-5 mb-3">
+                <label for="condition">Состояние</label>
+                <select name="condition" class="custom-select d-block w-100" id="condition" required="">
+                  <option value="">{{ adds[add_id].condition }}</option>
+                    <option>Б/у</option>
+                    <option>Новое</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-3 col-md-3">
+              <label for="cost">Цена</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">₽</span>
+                    </div>
+                    <input name="cost" type="text" class="form-control" id="cost" placeholder="" value="{{ adds[add_id].cost }}" required="">
+                </div>
+            </div>
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Сохранить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% else %}
+        <div class="container">
+      <div class="py-5 text-center">
+          <h2><b>К У П И - П Р О Д А Й</b></h2>
+        <p class="lead">Заполните форму объявления</p>
+      </div>
+      <div class="row">
+        <div class="col-md-12 order-md-1">
+          <h4 class="mb-3">Описание объявления</h4>
+          <form class="needs-validation" novalidate="" method="POST">
+            <div class="row">
+            </div>
+            <div class="mb-3">
+              <label for="title">Название объявления</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="title" name="name" placeholder="" required="" value="{{ adds[add_id].title }}">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="message">Описание объявления</label>
+                <textarea name="message" id="message" cols="152" rows="5" placeholder="" >{{ adds[add_id].message }}</textarea>
+            </div>
+            <div class="mb-3">
+              <label for="address">Адрес</label>
+              <input name="address" type="text" class="form-control" id="address" placeholder="" value="{{ adds[add_id].address }}" required="">
+            </div>
+            <div class="row">
+              <div class="col-md-5 mb-3">
+                <label for="condition">Состояние</label>
+                <select name="condition" class="custom-select d-block w-100" id="condition" required="">
+                  <option value="">{{ adds[add_id].condition }}</option>
+                    <option>Б/у</option>
+                    <option>Новое</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-3 col-md-3">
+              <label for="cost">Цена</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">₽</span>
+                    </div>
+                    <input name="cost" type="text" class="form-control" id="cost" placeholder="" value="{{ adds[add_id].cost }}" required="">
+                </div>
+            </div>
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Сохранить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+<footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">© 2021 Seregin Corp.</p>
+    <ul class="list-inline">
+
+      <li class="list-inline-item"><a href="/about">Связаться с нами</a></li>
+    </ul>
+  </footer>
+</body>
+</html>

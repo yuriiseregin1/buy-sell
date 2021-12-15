@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>{{ art.name }}</title>
+</head>
+<body>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <h5 class="my-0 mr-md-auto font-weight-normal"><a class="p-2 text-dark" href="/">К У П И - П Р О Д А Й</a></h5>
+
+  <nav class="my-2 my-md-0 mr-md-3">
+      <a class="p-2 text-dark" href="/">Главная</a>
+      <a class="p-2 text-dark" href="/my_adds">Мои объявления</a>
+      <a class="p-2 text-dark" href="/add">Разместить объявление</a>
+      <a class="p-2 text-dark" href="/profile/{{ id }}">Личный кабинет</a>
+      <a class="p-2 text-dark" href="/about">О нас</a>
+  </nav>
+        {% if id != '1' %}
+        <a class="btn btn-outline-primary" href="/profile/{{ id }}">{{ art1.name }}</a>
+        {% else %}
+  <a class="btn btn-outline-primary mr-md-3" href="/sign_in">Войти</a>
+  <a class="btn btn-outline-primary" href="/sign_up">Зарегистрироваться</a>
+        {% endif %}
+</div>
+<body>
+<div class="text-center">
+    <h1>Имя пользователя: {{ art.name }}<br>
+    Электронная почта: {{ art.email }}<br>
+    Номер телефона: {{ art.phone_number }}<br>
+    Активных объявлений: {{ art.number_of_adds }}<br>
+        {% if id != 0 %}
+        <br>
+        <a href="/logout"> Выйти из аккаунта  </a>
+        {% else %}
+        <h1><br>Вы еще не вошли в аккаунт.</p></h1>
+    <h3><a href="/login">Войти или зарегистрироваться</a></h3>
+        {% endif %}
+    </h1>
+</div>
+<footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">© 2021 Seregin Corp.</p>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="/about">Связаться с нами</a></li>
+    </ul>
+  </footer>
+</body>
