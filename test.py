@@ -73,7 +73,9 @@ def my_adds():
     true_adds = []
     con = sqlite3.connect("article.db")
     cur = con.cursor()
-    result = cur.execute("""SELECT * FROM adds""").fetchall()
+    result = cur.execute("""SELECT * FROM adds WHERE actual = 1""").fetchall()
+    result_costs = cur.execute("""SELECT cost FROM adds WHERE host_id = (?) AND actual = 1""", (id,)).fetchall()
+    result_phones = cur.execute("""SELECT phone_number FROM article WHERE id = (?)""", (str(int(id) + 1),)).fetchall()
     for i in range(len(result)):
         if str(result[i][1]) == str(id):
             true_adds.append(int(result[i][0]) - 1)
@@ -109,8 +111,39 @@ def my_adds():
     for i in range(len(dates)):
         dates_to_output[int(true_adds[i])] = dates[i]
     model2 = Article.query.get(int(id) + 1)
+    phone_number = []
+    model2 = Article.query.get(int(id) + 1)
+    for i in range(len(result_phones)):
+        num = (model[model1[i + 1].host_id].phone_number)
+        phone_number.append(
+            str("+" + str(num)[0] + ' ' + str(num)[1:4] + ' ' + str(num)[4:7] + '-' + str(num)[7:9] + '-' + str(num)[9:]))
+    print(phone_number[0])
+    print(result_costs)
+    costs = {}
+    for i in range(len(result_costs)):
+        a = str(result_costs[i][0])
+        if len(a) == 4:
+            b = a[0] + ' ' + a[1:]
+        elif len(a) == 5:
+            b = a[0:2] + ' ' + a[2:]
+        elif len(a) == 6:
+            b = a[0:3] + ' ' + a[3:]
+        elif len(a) == 7:
+            b = a[0] + ' ' + a[1:4] + ' ' + a[4:]
+        elif len(a) == 8:
+            b = a[0:2] + ' ' + a[2:5] + ' ' + a[5:]
+        else:
+            b = a
+        # costs.append(b)
+        costs[true_adds[i]] = b
+    print(costs)
     return render_template("my_adds.html", adds=model1, art=model, id=id, ids=true_adds, dates=dates_to_output,
-                           art1=model2)
+                           art1=model2, phone_number=phone_number[0], costs=costs)
+
+
+@app.route('/profile1')
+def profile1():
+    return render_template("profile1")
 
 
 @app.route('/add_archive')
@@ -123,7 +156,9 @@ def archive():
     true_adds = []
     con = sqlite3.connect("article.db")
     cur = con.cursor()
-    result = cur.execute("""SELECT * FROM adds""").fetchall()
+    result = cur.execute("""SELECT * FROM adds WHERE actual = 0""").fetchall()
+    result_costs = cur.execute("""SELECT cost FROM adds WHERE host_id = (?) AND actual = 1""", (id,)).fetchall()
+    result_phones = cur.execute("""SELECT phone_number FROM article WHERE id = (?)""", (str(int(id) + 1),)).fetchall()
     for i in range(len(result)):
         if str(result[i][1]) == str(id):
             true_adds.append(int(result[i][0]) - 1)
@@ -160,8 +195,34 @@ def archive():
         dates_to_output[int(true_adds[i])] = dates[i]
     print(id)
     model2 = Article.query.get(int(id) + 1)
+    phone_number = []
+    for i in range(len(result_phones)):
+        num = (model[model1[i + 1].host_id].phone_number)
+        phone_number.append(
+            str("+" + str(num)[0] + ' ' + str(num)[1:4] + ' ' + str(num)[4:7] + '-' + str(num)[7:9] + '-' + str(num)[9:]))
+    print(phone_number[0])
+    print(result_costs)
+    costs = {}
+    for i in range(len(result_costs)):
+        a = str(result_costs[i][0])
+        if len(a) == 4:
+            b = a[0] + ' ' + a[1:]
+        elif len(a) == 5:
+            b = a[0:2] + ' ' + a[2:]
+        elif len(a) == 6:
+            b = a[0:3] + ' ' + a[3:]
+        elif len(a) == 7:
+            b = a[0] + ' ' + a[1:4] + ' ' + a[4:]
+        elif len(a) == 8:
+            b = a[0:2] + ' ' + a[2:5] + ' ' + a[5:]
+        else:
+            b = a
+        # costs.append(b)
+        costs[true_adds[i]] = b
+    print(costs)
+
     return render_template("add_archive.html", adds=model1, art=model, id=str(id), ids=true_adds, dates=dates_to_output,
-                           art1=model2)
+                           art1=model2, phone_number=phone_number[0], costs=costs)
 
 
 @app.route('/add_public/<int:add_id>')
@@ -300,6 +361,7 @@ def home():
     # print(dates_to_output)
     # random.shuffle(output)
     random.shuffle(output)
+    print('OUTPUT', output)
 
     phone_number = []
     model2 = Article.query.get(int(id) + 1)
@@ -514,7 +576,19 @@ def profile(id):
     print(id)
     model = Article.query.get(id + 1)
     model2 = Article.query.get(int(id) + 1)
-    return render_template("profile.html", art=model, id=id, art1=model2)
+
+    con = sqlite3.connect("article.db")
+    cur = con.cursor()
+    result = cur.execute("""SELECT id FROM adds WHERE host_id = (?)""", (1,)).fetchall()
+    print(result)
+    con.commit()
+    for i in range(len(result)):
+        result[i] = result[i][0]
+    print(result)
+    num = model.phone_number
+    phone_number = "+" + str(num)[0] + ' ' + str(num)[1:4] + ' ' + str(num)[4:7] + '-' + str(num)[7:9] + '-' +\
+                   str(num)[9:]
+    return render_template("profile.html", art=model, id=id, art1=model2, phone_number=phone_number, ids=result, dates=dates())
 
 
 @app.route('/add', methods=['POST', 'GET'])
