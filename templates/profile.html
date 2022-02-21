@@ -42,7 +42,7 @@
 <body>
 
 
-
+<!--
 
 <div class="container ">
 <div class="form-inline mt-2 mt-md-1 mr-sm-4 py-3 " >
@@ -51,7 +51,7 @@
     Номер телефона: {{ phone_number }}  <br>  Активных объявлений: {{ art.number_of_adds }} <br>
 
 
-</div>
+</div> -->
 <br>
 <div class="album  bg-light ">
 
@@ -88,16 +88,13 @@
           {% endif %}
         {% endfor %}
 
-      </div><p class="float-right">
-          <a href="#">Вверх</a>
-        </p>
-    </div>
+
   </div>
 
 <!-- !!!!!!!!!!!!! -->
 <div class="text-center">
 
-    <!--<h1>Имя пользователя: {{ art.name }}<br>
+    <h1>Имя пользователя: {{ art.name }}<br>
     Электронная почта: {{ art.email }}<br>
     Номер телефона: {{ phone_number }}<br>
     Активных объявлений: {{ art.number_of_adds }}<br>
@@ -108,10 +105,10 @@
         <h1><br>Вы еще не вошли в аккаунт.</p></h1>
     <h3><a href="/login">Войти или зарегистрироваться</a></h3>
         {% endif %}
-    </h1> -->
+    </h1>
 </div>
 <footer class="my-5 pt-5 text-muted text-center text-small">
-    <p class="mb-1">© 2021 Seregin Corp.</p>
+    <p class="mb-1">© 2022 Seregin Corp.</p>
     <ul class="list-inline">
       <li class="list-inline-item"><a href="/about">Связаться с нами</a></li>
     </ul>

@@ -465,6 +465,7 @@ def login():
 def sign_up():
     if request.method == "POST":
         p = request.form.to_dict()
+        print(p)
         name, email, ps1, ps2, phone_number = p['Name'], p['email'], p['password1'], p['password2'], p['phone_number']
         con = sqlite3.connect("article.db")
         cur = con.cursor()
@@ -525,6 +526,7 @@ def sign_up():
 def sign_in():
     if request.method == "POST":
         p = request.form.to_dict()
+        print('request.form.to_dict() - ', p)
         con = sqlite3.connect("article.db")
         cur = con.cursor()
         result = cur.execute("""SELECT * FROM article""").fetchall()
@@ -588,7 +590,8 @@ def profile(id):
     num = model.phone_number
     phone_number = "+" + str(num)[0] + ' ' + str(num)[1:4] + ' ' + str(num)[4:7] + '-' + str(num)[7:9] + '-' +\
                    str(num)[9:]
-    return render_template("profile.html", art=model, id=id, art1=model2, phone_number=phone_number, ids=result, dates=dates())
+    return render_template("profile.html", art=model, id=id, art1=model2,
+                           phone_number=phone_number, ids=result, dates=dates())
 
 
 @app.route('/add', methods=['POST', 'GET'])
@@ -689,13 +692,8 @@ def add_del(add_id):
 @app.route('/add/edit/<int:add_id>', methods=['POST', 'GET'])
 def edit_add(add_id):
     if request.method == 'GET':
-        # con = sqlite3.connect("article.db")
-        # cur = con.cursor()
-        # result = cur.execute("""FROM adds SELECT WHERE id = (? )""", (add_id + 1,)).fetchall()
-        # con.commit()
         adds = Adds.query.all()
         print(adds[add_id].title)
-        # print(f"result: {result}")
         model = Article.query.all()
         id = (int(model[adds[add_id].host_id].id) - 1)
         model2 = Article.query.get(int(id) + 1)
